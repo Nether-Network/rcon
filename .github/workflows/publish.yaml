@@ -1,0 +1,74 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - &checkout
+        name: ⤵️ Checkout
+        uses: actions/checkout@v4
+      - &setup-node
+        name: 🚧 Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@nether-network'
+      - &cache-npm
+        name: 🗄️ Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: 📦 Install dependencies
+        run: npm install
+      - name: 🧪 Run tests
+        run: npm run test
+
+  publish:
+    permissions:
+      contents: read
+      packages: write
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - *checkout
+      - *setup-node
+      - *cache-npm
+      - name: 📦 Install dependencies
+        run: npm ci
+      - name: 🔗 Set version
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: npm version $VERSION --workspaces --no-git-tag-version
+      - name: 🔨 Build package
+        run: npm run build
+      - name: 📦 Publish common package
+        run: npm publish --workspace=common
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 📦 Publish client package
+        run: npm publish --workspace=client
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 📦 Publish server package
+        run: npm publish --workspace=server
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 📦 Publish proxy package
+        run: npm publish --workspace=proxy
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 📦 Publish proxy package
+        run: npm publish --workspace=cli
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}

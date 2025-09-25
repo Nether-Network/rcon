@@ -1,0 +1,41 @@
+{
+  "name": "@nether-network/rcon-cli",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Nether Network",
+    "url": "https://nether.network",
+    "email": "hey@nether.network"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": { "rcon-cli": "dist/index.js" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "node -e \"const fs=require('fs');const f='dist/index.js';const c=fs.readFileSync(f,'utf8');if(!c.startsWith('#!/usr/bin/env node')){fs.writeFileSync(f,'#!/usr/bin/env node\\n'+c)}\" && chmod +x dist/index.js",
+    "_test": "jest",
+    "test:coverage": "jest --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nether-network/rcon-client": "*",
+    "@nether-network/rcon-common": "*",
+    "chalk": "^4.1.2",
+    "commander": "^12.0.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "jest": "^30.1.3",
+    "ts-jest": "^29.4.4",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nether-Network/rcon.git",
+    "directory": "cli"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

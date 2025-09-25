@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./common" },
+    { "path": "./client" },
+    { "path": "./server" },
+    { "path": "./proxy" },
+    { "path":  "./cli" }
+  ]
+}
+
