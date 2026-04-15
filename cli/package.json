@@ -20,7 +20,7 @@
     "@nether-network/rcon-client": "*",
     "@nether-network/rcon-common": "*",
     "chalk": "^4.1.2",
-    "commander": "^12.0.0",
+    "commander": "^14.0.3",
     "winston": "^3.17.0"
   },
   "devDependencies": {
