@@ -18,7 +18,7 @@
     "@nether-network/rcon-common": "*",
     "@nether-network/rcon-client": "*",
     "@nether-network/rcon-server": "*",
-    "chalk": "^4.1.2",
+    "chalk": "^5.6.2",
     "winston": "^3.17.0"
   },
   "devDependencies": {
