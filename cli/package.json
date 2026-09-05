@@ -19,7 +19,7 @@
   "dependencies": {
     "@nether-network/rcon-client": "*",
     "@nether-network/rcon-common": "*",
-    "chalk": "^4.1.2",
+    "chalk": "^6.0.0",
     "commander": "^12.0.0",
     "winston": "^3.17.0"
   },
